@@ -1,54 +1,26 @@
-import Course from './Course'
+import { useState, useMemo, useEffect } from 'react'
+import RenderAllCountries from './components/RenderAllCountries'
+import SearchFilter from './components/SearchFilter'
+import {GetAll} from './services/Countries'
 
 const App = () => {
-  const courses = [
-    {
-      name: 'Half Stack application development',
-      id: 1,
-      parts: [
-        {
-          name: 'Fundamentals of React',
-          exercises: 10,
-          id: 1
-        },
-        {
-          name: 'Using props to pass data',
-          exercises: 7,
-          id: 2
-        },
-        {
-          name: 'State of a component',
-          exercises: 14,
-          id: 3
-        },
-        {
-          name: 'Redux',
-          exercises: 11,
-          id: 4
-        }
-      ]
-    }, 
-    {
-      name: 'Node.js',
-      id: 2,
-      parts: [
-        {
-          name: 'Routing',
-          exercises: 3,
-          id: 1
-        },
-        {
-          name: 'Middlewares',
-          exercises: 7,
-          id: 2
-        }
-      ]
-    }
-  ]
+  const [countries, setCountries] = useState([]);
+  const [filter, setFilter] = useState('');
+  
+
+  useEffect(() => {
+    GetAll().then(data => {setCountries(data)
+    }).catch(error => {console.error(error)})
+  }, []);
+
+  const filtered = useMemo(() => {
+    return countries.filter(c => c?.name?.common?.toLowerCase().includes(filter.trim().toLowerCase()))
+  }, [countries, filter])
 
   return (
     <div>
-      <Course courses={courses} />
+      <SearchFilter  filter={filter} setFilter={setFilter} />
+      <RenderAllCountries filter={filter} filtered={filtered} setFilter={setFilter} />
     </div>
   )
 }
