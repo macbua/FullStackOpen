@@ -1,7 +1,12 @@
-POST http://localhost:3001/api/notes/
+POST http://localhost:3001/api/persons/
 content-type: application/json
 
 {
-    "name": "sample",
-    "time": "Wed, 21 Oct 2015 18:27:50 GMT"
+  "name": "John",
 }
+
+//We send it twice to check the duplicate.
+
+//{"name": "Liisa Marttinen", "number": "040-243563"}
+//{"name": "John",}
+////{name: "John",}
