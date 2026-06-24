@@ -1,0 +1,12 @@
+POST http://localhost:3001/api/persons/
+content-type: application/json
+
+{
+  "name": "John",
+}
+
+//We send it twice to check the duplicate.
+
+//{"name": "Liisa Marttinen", "number": "040-243563"}
+//{"name": "John",}
+////{name: "John",}
